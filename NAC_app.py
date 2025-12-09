@@ -2,13 +2,12 @@
 Neo Andor Camera App
 *******************
 @authors: Emma Martinelli, Andrea Bassi. Politecnico di Milano
-
 '''
 from ScopeFoundry import BaseMicroscopeApp
 
 class NeoAndor_app(BaseMicroscopeApp):
     name = 'NeoAndorApp'
-    
+
     def setup(self):
         
         #Add hardware components

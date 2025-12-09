@@ -25,7 +25,9 @@ class NeoAndorHW(HardwareComponent):
         self.readout_rate = self.settings.New(name='Pixel readout rate', dtype=str, choices=['200 MHz', '560 Mhz'],
                                               initial='560 MKz', ro=False)
         self.overlap = self.settings.New(name='overlap', dtype=str, choices=['True', 'False'], initial='True', ro=False)
-        self.frame_rate = self.settings.New(name='Frame rate', dtype=float, ro=True, unit='Hz')
+        self.shutter_mode= self.settings.New(name='shutter mode', dtype=str, choices=['Rolling', 'Global'],
+                                              initial = 'Rolling', ro=False, reread_from_hardware_after_write=True)
+        self.frame_rate = self.settings.New(name='Frame rate', dtype=float, ro=True, unit='Hz', reread_from_hardware_after_write=True)
         self.frame_num = self.settings.New(name='frame_num',initial= 10, spinbox_step = 1,
                                            dtype=int, ro=False)
 
@@ -62,6 +64,8 @@ class NeoAndorHW(HardwareComponent):
         self.cooler.hardware_read_func= self.camera.cooler_check
 
         self.dynamic_range.hardware_set_func=self.camera.dynamic_range
+        self.readout_rate.hardware_set_func=self.camera.readout_rate
+        self.overlap.hardware_set_func=self.camera.overlap
 
         self.exposure_time.hardware_set_func = self.camera.exposure_set
         self.exposure_time.hardware_read_func = self.camera.exposure_get

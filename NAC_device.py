@@ -58,6 +58,12 @@ class NeoAndorDevice(object):
     def overlap(self, mode):
         self.cam.set_attribute_value('Overlap', mode)
 
+    def shuttering_mode(self,mode):
+        if 'Rolling' in mode:
+            self.cam.set_attribute_value('PixelReadoutRate', 0)
+        if 'Global' in mode:
+            self.cam.set_attribute_value('ElectronicShutteringMode', 1)
+
     def frame_rate(self):
         return self.cam.get_attribute_value('FrameRate')
 
